@@ -36,15 +36,12 @@ RUN gem install bundler -v 2.6.6
 WORKDIR /workspace
 
 # Copy only Gemfile first (for better Docker layer caching)
-COPY app/Gemfile* ./
+COPY app/Gemfile* ./app/
 
 # Install gems (this layer will be cached if Gemfile doesn't change)
-RUN bundle config set --local deployment 'false' \
+RUN cd app && bundle config set --local deployment 'false' \
     && bundle config set --local path '/usr/local/bundle' \
     && bundle install --jobs=4 --retry=3
-
-# Copy the rest of the application
-COPY app/ ./
 
 # Create non-root user
 RUN useradd -m -s /bin/bash developer && \

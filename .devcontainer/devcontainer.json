@@ -46,7 +46,10 @@
   },
 
   // Use 'postCreateCommand' to run commands after the container is created
-  "postCreateCommand": "bundle exec rails db:create db:migrate db:seed",
+  "postCreateCommand": "cd app && bundle exec rails db:create db:migrate db:seed",
+  
+  // Use 'postStartCommand' to run commands after the container starts
+  "postStartCommand": "cd app && bundle exec rails server -b 0.0.0.0 -p 3000",
 
   // Configure tool-specific properties
   "remoteUser": "developer",

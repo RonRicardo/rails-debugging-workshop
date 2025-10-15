@@ -1,7 +1,8 @@
 {
   "name": "Rails Debugging Workshop",
-  "dockerFile": "Dockerfile",
-  "context": "..",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
   
   // Features to add to the dev container
   "features": {

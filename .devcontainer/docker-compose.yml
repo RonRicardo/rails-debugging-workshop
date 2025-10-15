@@ -15,7 +15,8 @@ services:
       - BUNDLE_PATH=/usr/local/bundle
       - DATABASE_URL=postgresql://postgres:password@db:5432/workshop_development
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: sleep infinity
 
   db:
@@ -27,8 +28,14 @@ services:
       - POSTGRES_DB=workshop_development
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres-data:

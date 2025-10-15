@@ -1,66 +1,42 @@
-# WELCOME TO OUR BEAUTIFUL GEMFILE
-# Please keep it tidy. Note how things are organized and formatted alphabetically, notes on the same
-# line, etc. Only you can prevent Gemfile fires.
+# Rails Debugging Workshop - Minimal Gemfile
+# Focused on creating strong params and pagination bugs
 
-# Please contact engineering as part of changing the Ruby version for this project.
-ruby ENV["RUBY_VERSION_OVERRIDE"] || "3.3.5"
+ruby "3.3.5"
 
-if Gem::Version.new(Bundler::VERSION) < Gem::Version.new('2.0.0')
-  abort "Bundler version >= 2.0.0 is required. Try invoking `bundle update --bundler`"
-end
-
-eval_gemfile File.expand_path("Gemfile.helpers", __dir__)
-
-# === RubyGems ===
 source "https://rubygems.org"
 
-rails_components.each do |component|
-  gem component, *rails_requirements
+# === Rails Core ===
+gem "rails", "~> 7.2.2"
+
+# === Database ===
+gem "pg", "~> 1.5" # PostgreSQL adapter
+
+# === Web Server ===
+gem "puma", "~> 6.4"
+
+# === JSON API ===
+gem "jbuilder", "~> 2.11" # For pagination bug scenarios
+
+# === CORS (for API testing) ===
+gem "rack-cors", "~> 2.0.2", require: "rack/cors"
+
+# === Pagination (for the pagination bug) ===
+gem "kaminari", "~> 1.2"
+
+# === Development & Debugging ===
+group :development, :test do
+  gem "debug", ">= 1.0.0", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "rspec-rails", "~> 7.0.1"
+  gem "factory_bot_rails", "~> 6.4"
+  gem "byebug", "~> 11.0"
 end
-
-gem "bcrypt",                         "~> 3.1" # For password hashing
-gem "bootsnap",                       "=1.12.0", require: false # Reduces boot times through caching
-gem "jbuilder",                       "~> 2.11" # Build JSON APIs with ease
-gem "pg",                             "~> 1.5" # PostgreSQL database adapter
-gem "puma",                           "~> 6.4" # Web server
-gem "rack-cors",                      "~> 2.0.2", require: "rack/cors" # Handle CORS for API
-gem "redis",                          "~> 4.8" # Redis adapter for Action Cable and caching
-gem "strong_migrations",              "~> 2.3" # Catch unsafe migrations in development
-
-# === Groups ====
 
 group :development do
-  gem "better_errors",            "~> 2.10"
-  gem "binding_of_caller",        "~> 1.0.1"
-  gem "letter_opener",            "~> 1.10"
-  gem "letter_opener_web",        "~> 3.0"
-  gem "listen",                   "~> 3.5"
-end
-
-group :development, :test do
-  gem "awesome_print"
-  gem "byebug",                   "~> 11.0"
-  gem "colorize"
-  gem "debug",                    ">= 1.0.0", platforms: %i[ mri windows ], require: "debug/prelude"
-  gem "factory_bot_rails",        "~> 6.4"
-  gem "pry-rails"
-  gem "rspec-rails",              "~> 7.0.1"
-  gem "shoulda-matchers",         "~> 6.4"
-  gem "timecop",                  "~> 0.9"
-  gem "webmock",                  "~> 3.25"
+  gem "listen", "~> 3.5"
 end
 
 group :test do
-  gem "brakeman",                 "~> 7.0.0"
-  gem "bundler-audit"
-  gem "mock_redis",               "= 0.45.0"
-  gem "rubocop"
-  gem "rubocop-rails"
-  gem "rubocop-rspec"
-end
-
-group :production do
-  gem "tzinfo-data" # https://github.com/tzinfo/tzinfo/wiki/Resolving-TZInfo::DataSourceNotFound-Errors
+  gem "webmock", "~> 3.25"
 end
 
 

@@ -1,0 +1,27 @@
+# Gemfile helpers for the Rails Debugging Workshop
+# This file contains helper methods for managing gems and dependencies
+
+# Helper method for defining Rails engines (placeholder for future use)
+def hashicorp_engine(name)
+  # Placeholder for future HashiCorp engine integration
+  # This would typically load a HashiCorp-specific Rails engine
+  puts "Loading HashiCorp engine: #{name}" if ENV['RAILS_ENV'] == 'development'
+end
+
+# Helper method for defining Rails requirements
+def rails_requirements
+  ["~> 7.2.2.2"]
+end
+
+# Helper method for defining Rails components
+def rails_components
+  %w[
+    activesupport
+    actionpack
+    actionview
+    activemodel
+    activerecord
+    actionmailer
+    railties
+  ]
+end

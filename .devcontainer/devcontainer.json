@@ -1,0 +1,63 @@
+{
+  "name": "Rails Debugging Workshop",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph",
+        "ms-vscode.vscode-json",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-eslint",
+        "ms-vscode.vscode-prettier",
+        "ms-vscode-remote.remote-containers"
+      ],
+      "settings": {
+        "ruby.intellisense": "rubyLsp",
+        "ruby.format": "rubocop",
+        "ruby.lint": {
+          "rubocop": true
+        },
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+      }
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally
+  "forwardPorts": [3000, 5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails Server",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL"
+    }
+  },
+
+  // Use 'postCreateCommand' to run commands after the container is created
+  "postCreateCommand": "bundle install && bundle exec rails db:create db:migrate",
+
+  // Configure tool-specific properties
+  "remoteUser": "developer",
+  "workspaceFolder": "/workspace",
+
+  // Environment variables
+  "containerEnv": {
+    "RAILS_ENV": "development",
+    "BUNDLE_PATH": "/usr/local/bundle",
+    "DATABASE_URL": "postgresql://postgres:password@localhost:5432/workshop_development"
+  }
+}

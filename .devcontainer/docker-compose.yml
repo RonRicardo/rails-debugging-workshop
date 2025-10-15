@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ../app:/workspace
+      - bundle-cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=development
+      - BUNDLE_PATH=/usr/local/bundle
+      - DATABASE_URL=postgresql://postgres:password@db:5432/workshop_development
+    depends_on:
+      - db
+    command: sleep infinity
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=workshop_development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-data:
+  bundle-cache:

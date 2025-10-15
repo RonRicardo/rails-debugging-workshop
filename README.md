@@ -1,7 +1,5 @@
 # Rails Debugging Workshop
 
-A comprehensive Rails API application designed for debugging workshops and learning Rails development best practices. This repository includes everything you need to get started with Rails debugging, testing, and development.
-
 ## 🚀 Quick Start with Codespaces
 
 **Recommended**: Open this repository in GitHub Codespaces for a pre-configured development environment.
@@ -67,32 +65,6 @@ rails-debugging-workshop/
    bundle exec rails server
    ```
 
-## 🎯 Workshop Features
-
-### Rails API Development
-- **API-only configuration** - No views, just JSON APIs
-- **JBuilder** for structured JSON responses
-- **CORS enabled** for frontend integration
-- **PostgreSQL** for production-ready database
-
-### Debugging Tools
-- **Byebug** - Interactive debugging
-- **Pry** - Enhanced REPL
-- **Better Errors** - Beautiful error pages
-- **Rails Console** - Database interaction
-
-### Testing Framework
-- **RSpec** - Comprehensive testing
-- **Factory Bot** - Test data generation
-- **Shoulda Matchers** - Rails-specific matchers
-- **WebMock** - HTTP request mocking
-
-### Code Quality
-- **RuboCop** - Ruby style guide
-- **Brakeman** - Security analysis
-- **Bundler Audit** - Vulnerability scanning
-- **Strong Migrations** - Safe database changes
-
 ## 📦 Key Gems
 
 ### Core Rails
@@ -111,11 +83,6 @@ rails-debugging-workshop/
 - `factory_bot_rails` - Test data generation
 - `byebug` - Debugging
 - `pry-rails` - Enhanced console
-
-### Code Quality
-- `rubocop` - Style guide enforcement
-- `brakeman` - Security scanner
-- `strong_migrations` - Safe migrations
 
 ## 🧪 Testing
 
@@ -276,13 +243,6 @@ lsof -ti:3000 | xargs kill -9
 # Or use different port
 bundle exec rails server -p 3001
 ```
-
-## 📞 Support
-
-If you encounter any issues:
-
-1. Check the [troubleshooting section](#-troubleshooting)
-2. Look at the [GitHub Issues](https://github.com/your-username/rails-debugging-workshop/issues)
 3. Create a new issue with detailed information
 
 ---

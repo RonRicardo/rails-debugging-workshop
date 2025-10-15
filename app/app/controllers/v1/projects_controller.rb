@@ -35,8 +35,8 @@ module V1
 
     private
     def project_params
-      # BUG: expects flat params, not JSON:API
-      params.require(:project).permit(:name, :status, :owner_id)
+      attrs = params.require(:data).require(:attributes)
+      attrs.permit(:name, :status, :owner_id)
     end
   end
 end

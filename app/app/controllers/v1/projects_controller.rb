@@ -35,8 +35,7 @@ module V1
 
     private
     def project_params
-      attrs = params.require(:data).require(:attributes)
-      attrs.permit(:name, :status, :owner_id)
+      params.require(:project).permit(:name, :status, :owner_id)
     end
   end
 end

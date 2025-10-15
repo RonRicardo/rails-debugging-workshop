@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CODESPACE_README.md
+
+# Logs
+app/log/*
+!app/log/.keep
+
+# Temporary files
+app/tmp/*
+!app/tmp/.keep
+
+# Storage
+app/storage/*
+!app/storage/.keep
+
+# Node modules (if any)
+node_modules
+
+# Coverage reports
+coverage
+
+# IDE files
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db

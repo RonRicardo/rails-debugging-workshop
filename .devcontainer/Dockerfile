@@ -1,7 +1,7 @@
 # Use the official Ruby 3.3.5 image
 FROM ruby:3.3.5
 
-# Install system dependencies
+# Install system dependencies in one layer
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
@@ -11,40 +11,44 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     nano \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
-# Install Node.js (useful for Rails development)
+# Install Node.js and Yarn in one layer
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && npm install -g yarn \
+    && apt-get clean
 
-# Install Yarn
-RUN npm install -g yarn
-
-# Install the latest compatible Bundler version
+# Install Bundler
 RUN gem install bundler -v 2.6.6
 
-# Set the working directory
+# Set working directory
 WORKDIR /workspace
 
-# Copy Gemfile and Gemfile.lock (if it exists)
+# Copy only Gemfile first (for better Docker layer caching)
 COPY app/Gemfile* ./
 
-# Install gems
-RUN bundle install
+# Install gems (this layer will be cached if Gemfile doesn't change)
+RUN bundle config set --local deployment 'false' \
+    && bundle config set --local path '/usr/local/bundle' \
+    && bundle install --jobs=4 --retry=3
 
 # Copy the rest of the application
 COPY app/ ./
 
-# Expose port 3000 for Rails server
-EXPOSE 3000
+# Create non-root user
+RUN useradd -m -s /bin/bash developer && \
+    chown -R developer:developer /workspace
 
 # Set environment variables
 ENV RAILS_ENV=development
 ENV BUNDLE_PATH=/usr/local/bundle
 
-# Create a non-root user
-RUN useradd -m -s /bin/bash developer && \
-    chown -R developer:developer /workspace
+# Expose port
+EXPOSE 3000
+
+# Switch to non-root user
 USER developer
 
 # Default command

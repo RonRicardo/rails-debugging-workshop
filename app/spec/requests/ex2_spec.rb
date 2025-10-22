@@ -3,7 +3,7 @@ require "rails_helper"
 
 RSpec.describe "EX2: Create project via JSON:API", type: :request do
   let(:payload) do
-    { data: { type: "projects", attributes: { name: "X", status: "active" } } }
+    { data: { type: "projects", attributes: { name: "X", owner_id: 2 } } }
   end
 
   it "creates and returns the resource when nested JSON:API params are permitted" do

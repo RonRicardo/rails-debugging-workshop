@@ -10,11 +10,11 @@ RSpec.describe "EX3: Paginated index", type: :request do
   end
 
   it "respects page[number] and page[size] and exposes next link" do
-    get "/v1/projects", params: { page: { number: 1, size: 5 } }
+    get "/v1/projects", params: { page: { number: 1, size: 5 } }, headers: { "Host" => "localhost" }
     expect(response).to have_http_status(:ok)
     page1 = JSON.parse(response.body)["data"].map { |d| d["id"].to_i }
 
-    get "/v1/projects", params: { page: { number: 2, size: 5 } }
+    get "/v1/projects", params: { page: { number: 2, size: 5 } }, headers: { "Host" => "localhost" }
     expect(response).to have_http_status(:ok)
     page2 = JSON.parse(response.body)["data"].map { |d| d["id"].to_i }
 

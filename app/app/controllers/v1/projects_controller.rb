@@ -1,15 +1,15 @@
 module V1
   class ProjectsController < ApplicationController
+
     def index
       page_number = params.dig(:page, :number).to_i
       page_number = 1 if page_number <= 0
-      page_size   = params.dig(:page, :size).to_i
-      page_size   = 20 if page_size <= 0 || page_size > 100
 
-      scope = Project.order(id: :asc).limit(page_size).offset((page_number - 1) * page_size)
+      page_size = params.dig(:page, :size).to_i
+      page_size = 20 if page_size <= 0 || page_size > 100
 
-      next_url = url_for(controller: "/v1/projects", action: :index, only_path: false,
-                         page: { number: page_number + 1, size: page_size })
+      scope = Project.order(id: :asc)
+
       response.set_header("Link", %(<#{next_url}>; rel="next"))
 
       render json: ProjectSerializer.new(scope).serializable_hash

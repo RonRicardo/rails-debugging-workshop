@@ -37,6 +37,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4"
   gem "byebug", "~> 11.0"
   gem "pry"
+  gem "ostruct"
 end
 
 group :development do

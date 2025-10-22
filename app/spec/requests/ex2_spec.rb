@@ -10,7 +10,7 @@ RSpec.describe "EX2: Create project via JSON:API", type: :request do
     expect {
       post "/v1/projects",
         params: payload.to_json,
-        headers: { "CONTENT_TYPE" => "application/vnd.api+json" }
+        headers: { "CONTENT_TYPE" => "application/json" }
     }.to change { Project.count }.by(1)
 
     expect(response).to have_http_status(:created)
